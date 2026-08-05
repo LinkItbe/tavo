@@ -1,0 +1,688 @@
+@import "tailwindcss";
+
+:root {
+  --page-bg: #FAF5E8;
+  --page-bg-dark: #F5EFE0;
+  --surface: #F8F2E7;
+  --surface-light: #FFFDF7;
+  --ink: #4F5328;
+  --ink-warm: #5E432F;
+  --muted: #7C725F;
+  --border: #D8CFBE;
+
+  --olive: #707437;
+  --olive-dark: #4F5328;
+  --olive-deep: #3E411E;
+  --olive-soft: #E4E3C8;
+
+  --butter: #FFF4B8;
+  --butter-soft: #FAF5E8;
+  --butter-cream: #FFFDF7;
+
+  --terracotta: #A64F2C;
+  --terracotta-dark: #8A4B2D;
+  --terracotta-deep: #6E3A21;
+  --terracotta-soft: #EED8CC;
+
+  --footer-bg: #3E411E;
+  --footer-text: #FFF4B8;
+
+  --header-height: 76px;
+
+  --font-display: "Sora", sans-serif;
+  --font-ui: "Geologica", sans-serif;
+  --font-logo: "Sora", sans-serif;
+
+  --motion-fast: 180ms;
+  --motion-ui: 240ms;
+  --motion-card: 320ms;
+  --motion-page: 380ms;
+  --motion-section: 500ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --bg-page: var(--page-bg);
+  --text-primary: var(--ink);
+  --text-secondary: var(--muted);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  img {
+    max-width: 100%;
+  }
+  body {
+    font-family: var(--font-ui), sans-serif;
+    background-color: var(--page-bg);
+    color: var(--ink);
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display), sans-serif;
+  }
+}
+
+.warm-food-photo {
+  filter: contrast(1.02) saturate(1.03);
+}
+
+.scrollbar-gutter-stable {
+  scrollbar-gutter: stable;
+}
+
+/* Custom horizontal scrollbar hide/slim */
+.no-scrollbar::-webkit-scrollbar,
+.mobile-category-track::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.mobile-category-track {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 9px;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 2px 14px 8px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.mobile-category-scrollbar {
+  position: relative;
+  width: 72px;
+  height: 2px;
+  margin: 7px auto 0;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 244, 184, 0.26);
+}
+
+.mobile-category-scrollbar-thumb {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  min-width: 22px;
+  border-radius: 999px;
+  background: #FFF4B8;
+  transform: translateX(0);
+  transition: transform 80ms linear;
+  will-change: transform;
+}
+
+/* ==========================================================================
+   TAVOO MAP & LEAFLET STYLING OVERRIDES
+   ========================================================================== */
+
+.leaflet-container {
+  font-family: var(--font-ui), sans-serif !important;
+  background-color: #f7f4ec !important;
+  outline: none !important;
+}
+
+/* Ensure map tiles remain clear and vibrant with strong contrast */
+.leaflet-tile-pane {
+  opacity: 1 !important;
+}
+
+.leaflet-tile {
+  filter: none !important;
+}
+
+/* Tavoo Price Tag Marker */
+.tavoo-marker-wrapper {
+  background: transparent !important;
+  border: none !important;
+}
+
+.tavoo-marker-pin {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  padding: 5px 11px !important;
+  background-color: #FFF4B8 !important;
+  color: #4F5328 !important;
+  border: 1.5px solid #707437 !important;
+  border-radius: 14px !important;
+  font-family: var(--font-ui), sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+  box-shadow: 0 3px 10px rgba(79, 83, 40, 0.16) !important;
+  cursor: pointer !important;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  user-select: none !important;
+}
+
+.tavoo-marker-pin:hover,
+.tavoo-marker-pin.is-hovered {
+  background-color: #707437 !important;
+  color: #FFF4B8 !important;
+  border-color: #707437 !important;
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 6px 18px rgba(112, 116, 55, 0.35) !important;
+  z-index: 999 !important;
+}
+
+.tavoo-marker-pin.is-selected {
+  background-color: #A64F2C !important;
+  color: #FFF4B8 !important;
+  border-color: #A64F2C !important;
+  transform: translateY(-2px) scale(1.08) !important;
+  box-shadow: 0 8px 22px rgba(166, 79, 44, 0.45) !important;
+  z-index: 1000 !important;
+}
+
+/* Tavoo Olive Cluster Icons - Fixed stability, ZERO SHIFT */
+.tavoo-cluster-icon-wrapper {
+  background: transparent !important;
+  border: none !important;
+}
+
+.tavoo-cluster-inner,
+.tavoo-cluster-icon {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  border-radius: 50% !important;
+  background-color: #707437 !important;
+  color: #FFF4B8 !important;
+  border: 2px solid rgba(255, 244, 184, 0.85) !important;
+  font-family: var(--font-ui), sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 15px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 8px 18px rgba(79, 83, 40, 0.22) !important;
+  cursor: pointer !important;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease !important;
+  user-select: none !important;
+  transform: none !important;
+}
+
+.tavoo-cluster-inner:hover,
+.tavoo-cluster-icon:hover {
+  background-color: #858a43 !important;
+  box-shadow: 0 10px 22px rgba(79, 83, 40, 0.35) !important;
+  transform: none !important;
+}
+
+/* Tavoo Zoom Controls */
+.leaflet-control-zoom {
+  border: 1px solid #D8CFBE !important;
+  box-shadow: 0 4px 16px rgba(62, 65, 30, 0.12) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  background: #FFFDF7 !important;
+  margin-right: 16px !important;
+  margin-bottom: 24px !important;
+}
+
+.leaflet-control-zoom a {
+  background-color: #FFFDF7 !important;
+  color: #4F5328 !important;
+  border-bottom: 1px solid #EBE5D8 !important;
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  transition: background-color 0.15s ease, color 0.15s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: #FFF4B8 !important;
+  color: #707437 !important;
+}
+
+.leaflet-control-zoom a:last-child {
+  border-bottom: none !important;
+}
+
+/* Tavoo Attribution Badge */
+.leaflet-control-attribution {
+  background: rgba(255, 253, 247, 0.9) !important;
+  backdrop-filter: blur(6px) !important;
+  color: #5E432F !important;
+  font-size: 11px !important;
+  border-radius: 8px !important;
+  padding: 3px 10px !important;
+  margin: 8px 16px !important;
+  border: 1px solid rgba(216, 207, 190, 0.6) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+}
+
+.leaflet-control-attribution a {
+  color: #707437 !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+}
+
+.leaflet-control-attribution a:hover {
+  text-decoration: underline !important;
+}
+
+/* Tavoo District Polygon Labels */
+.tavoo-district-label {
+  background: rgba(255, 253, 247, 0.92) !important;
+  color: #4F5328 !important;
+  border: 1px solid rgba(112, 116, 55, 0.35) !important;
+  border-radius: 8px !important;
+  padding: 3px 8px !important;
+  font-family: var(--font-ui), sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+  box-shadow: 0 3px 10px rgba(79, 83, 40, 0.1) !important;
+  pointer-events: none !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* Tavoo Map Section Isolation & Stacking Context */
+.tavoo-map-section {
+  position: relative !important;
+  isolation: isolate !important;
+  z-index: 10 !important;
+  overflow: hidden !important;
+  border-radius: 24px !important;
+  background-color: #FAF5E8 !important;
+  contain: layout paint !important;
+}
+
+.leaflet-container {
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 560px !important;
+  overflow: hidden !important;
+  border-radius: inherit !important;
+  background-color: #FAF5E8 !important;
+  z-index: 1 !important;
+}
+
+.leaflet-container,
+.leaflet-container * {
+  animation-name: none !important;
+}
+
+.leaflet-map-pane,
+.leaflet-tile-pane,
+.leaflet-overlay-pane,
+.leaflet-marker-pane,
+.leaflet-tile {
+  backface-visibility: hidden !important;
+  opacity: 1 !important;
+}
+
+/* Leaflet Popup Default Overrides */
+.leaflet-popup-content-wrapper {
+  padding: 0 !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  box-shadow: 0 16px 36px rgba(62, 65, 30, 0.18) !important;
+  border: 1px solid #D8CFBE !important;
+  background-color: #FFFDF7 !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1.4 !important;
+}
+
+.leaflet-popup-tip {
+  background-color: #FFFDF7 !important;
+  border: 1px solid #D8CFBE !important;
+}
+
+/* ==========================================================================
+   GLOBAL MOTION SYSTEM & ANIMATION TOKENS
+   ========================================================================== */
+
+/* Page entrance transition */
+.page-transition {
+  animation: pageEntrance var(--motion-page) var(--motion-ease) forwards;
+  will-change: opacity, transform;
+}
+
+@keyframes pageEntrance {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Scroll reveal sections */
+.reveal-init {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--motion-section) var(--motion-ease),
+              transform var(--motion-section) var(--motion-ease);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger card items */
+.stagger-card {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--motion-ui) var(--motion-ease),
+              transform var(--motion-ui) var(--motion-ease);
+}
+
+.stagger-card.stagger-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Modal, Popover, Drawer & Calendar animations */
+.modal-popover-enter {
+  animation: modalPopEnter var(--motion-ui) var(--motion-ease) forwards;
+}
+
+@keyframes modalPopEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.backdrop-fade-enter {
+  animation: backdropFadeEnter var(--motion-fast) var(--motion-ease) forwards;
+}
+
+@keyframes backdropFadeEnter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Hero Entrance Sequence Classes */
+.hero-phrase-enter {
+  animation: heroPhraseAnim 400ms var(--motion-ease) forwards;
+}
+
+@keyframes heroPhraseAnim {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hero-search-enter {
+  animation: heroSearchAnim 480ms var(--motion-ease) 120ms forwards;
+  opacity: 0;
+}
+
+@keyframes heroSearchAnim {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hero-filters-enter {
+  animation: heroFiltersAnim 420ms var(--motion-ease) 220ms forwards;
+  opacity: 0;
+}
+
+@keyframes heroFiltersAnim {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hero-tab-enter {
+  animation: heroTabAnim 360ms var(--motion-ease) 300ms forwards;
+  opacity: 0;
+}
+
+@keyframes heroTabAnim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Pre-styled "Все кухни" bottom tab */
+.all-cuisines-tab {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 50%);
+  z-index: 20;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background: #FFF4B8;
+  color: #25211C;
+  border: 1px solid #C7B9A6;
+  border-radius: 13px;
+  min-height: 42px;
+  padding: 0 20px;
+  box-shadow: 0 8px 22px rgba(67, 52, 31, 0.10);
+  transition: background-color var(--motion-fast) var(--motion-ease),
+              border-color var(--motion-fast) var(--motion-ease),
+              color var(--motion-fast) var(--motion-ease),
+              transform var(--motion-fast) var(--motion-ease);
+}
+
+.all-cuisines-tab:hover {
+  background: #707437;
+  border-color: #707437;
+  color: #FFFFFF;
+  transform: translate(-50%, calc(50% + 2px));
+}
+
+/* Heart Icon pop microinteraction */
+.heart-pop-anim {
+  animation: heartPop 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.32); }
+  100% { transform: scale(1); }
+}
+
+/* Card hover animation */
+.hover-card-anim {
+  transition: transform var(--motion-fast) var(--motion-ease),
+              box-shadow var(--motion-fast) var(--motion-ease);
+}
+
+.hover-card-anim:hover {
+  transform: translate3d(0, -3px, 0);
+  box-shadow: 0 12px 28px rgba(37, 31, 22, 0.10);
+}
+
+/* Image subtle zoom on card hover */
+.hover-img-zoom {
+  transition: transform 300ms var(--motion-ease);
+}
+
+.group:hover .hover-img-zoom {
+  transform: scale(1.02);
+}
+
+/* Collection arrow shift */
+.hover-arrow-shift {
+  transition: transform var(--motion-fast) var(--motion-ease);
+}
+
+.group:hover .hover-arrow-shift {
+  transform: translate3d(3px, 0, 0);
+}
+
+/* Button micro hover */
+.hover-btn-micro {
+  transition: transform var(--motion-fast) var(--motion-ease),
+              background-color var(--motion-fast) var(--motion-ease);
+}
+
+.hover-btn-micro:hover {
+  transform: translate3d(0, -1px, 0);
+}
+
+/* Prefers Reduced Motion Accessibility Override */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .page-transition,
+  .modal-popover-enter,
+  .backdrop-fade-enter,
+  .hero-phrase-enter,
+  .hero-search-enter,
+  .hero-filters-enter,
+  .hero-tab-enter {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .reveal-init,
+  .stagger-card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .all-cuisines-tab:hover,
+  .hover-card-anim:hover,
+  .group:hover .hover-img-zoom,
+  .group:hover .hover-arrow-shift,
+  .hover-btn-micro:hover {
+    transform: none !important;
+  }
+}
+
+/* Tavoo Header Nav Link Active Indicator (2px underline bar) */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  height: 2px;
+  background: #707437;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 180ms ease;
+}
+
+.nav-link[aria-current="page"]::after,
+.nav-link.is-active::after {
+  transform: scaleX(1);
+}
+
+/* Tavoo Header Logo */
+.header-logo-link {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  line-height: 0;
+  z-index: 20;
+}
+
+.header-logo-img {
+  display: block;
+  height: 42px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+  object-position: center;
+  transform: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+  flex-shrink: 0;
+}
+
+/* Tavoo Footer Logo */
+.footer-logo-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  line-height: 0;
+  text-decoration: none;
+  margin-bottom: 18px;
+}
+
+.footer-logo-image {
+  display: block;
+  width: 118px;
+  height: auto;
+  max-width: none;
+  object-fit: contain;
+  object-position: left center;
+  transform: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+@media (max-width: 640px) {
+  .footer-logo-image {
+    width: 102px;
+  }
+}
+
+
+
+

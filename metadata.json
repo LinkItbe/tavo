@@ -1,0 +1,6 @@
+{
+  "name": "Tavoo",
+  "description": "Платформа для поиска ресторанов, гастрономических фестивалей и кулинарных впечатлений.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

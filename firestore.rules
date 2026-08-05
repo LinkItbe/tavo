@@ -1,0 +1,76 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function memberDoc() {
+      return get(/databases/$(database)/documents/restaurantMembers/$(request.auth.uid));
+    }
+
+    function isActiveMember() {
+      return isSignedIn()
+        && memberDoc().data != null
+        && memberDoc().data.active == true;
+    }
+
+    function memberRestaurantId() {
+      return memberDoc().data.restaurantId;
+    }
+
+    // Restaurants
+    match /restaurants/{restaurantId} {
+      allow read: if resource.data.active == true;
+      allow write: if false;
+
+      match /tables/{tableId} {
+        allow read: if resource.data.active == true;
+        allow write: if false;
+      }
+    }
+
+    // Restaurant Members
+    match /restaurantMembers/{uid} {
+      allow get: if isSignedIn() && request.auth.uid == uid;
+      allow list: if false;
+      allow write: if false;
+    }
+
+    // Bookings
+    match /bookings/{bookingId} {
+      allow read: if isActiveMember() && resource.data.restaurantId == memberRestaurantId();
+      allow create: if false;
+      allow delete: if false;
+      allow update: if isActiveMember()
+        && resource.data.restaurantId == memberRestaurantId()
+        && request.resource.data.restaurantId == resource.data.restaurantId
+        && request.resource.data.customerName == resource.data.customerName
+        && request.resource.data.customerPhone == resource.data.customerPhone
+        && request.resource.data.customerEmail == resource.data.customerEmail
+        && request.resource.data.bookingCode == resource.data.bookingCode
+        && request.resource.data.guestAccessTokenHash == resource.data.guestAccessTokenHash
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'status', 'restaurantNote', 'tableId', 'tableName', 'updatedAt'
+        ]);
+    }
+
+    // Booking Events
+    match /bookingEvents/{eventId} {
+      allow read: if isActiveMember() && resource.data.restaurantId == memberRestaurantId();
+      allow write: if false;
+    }
+
+    // Booking Locks
+    match /bookingLocks/{lockId} {
+      allow read, write: if false;
+    }
+
+    // System
+    match /system/{docId} {
+      allow read, write: if false;
+    }
+  }
+}
