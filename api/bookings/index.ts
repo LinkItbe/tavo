@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { adminDb } from '../../src/lib/firebaseAdmin';
-import { createBooking } from '../../src/server/bookings';
+import { adminDb } from '../../src/lib/firebaseAdmin.js';
+import { createBooking } from '../../src/server/bookings.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Content-Type', 'application/json');
