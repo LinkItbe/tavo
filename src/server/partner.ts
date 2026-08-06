@@ -1,6 +1,6 @@
 import { FieldValue } from 'firebase-admin/firestore';
 import { adminDb } from '../lib/firebaseAdmin.js';
-import { verifyUserToken } from './auth';
+import { verifyUserToken } from './auth.js';
 import { checkRateLimit, hashToken } from '../lib/serverUtils';
 
 export interface ClaimRequest {
