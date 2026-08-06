@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { claimPartnerAccount } from '../../src/server/partner';
+import { claimPartnerAccount } from '../../src/server/partner.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Content-Type', 'application/json');
